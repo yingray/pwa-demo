@@ -1,0 +1,83 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="manifest" href="/manifest.json">
+  <title>Sample PWA</title>
+</head>
+
+<body>
+
+  <h2>Sample PWA</h2>
+  <h3>Add to Home Screen</h2>
+    <p id="a2hs">Waiting...</p>
+
+
+</body>
+<script>
+  if ("serviceWorker" in navigator && "PushManager" in window) {
+    console.log("Service Worker and Push is supported");
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(registration => {
+        console.log("SW registered: ", registration);
+      })
+      .catch(registrationError => {
+        console.log("SW registration failed: ", registrationError);
+      });
+  } else {
+    console.warn("Push messaging is not supported");
+    pushButton.textContent = "Push Not Supported";
+  }
+  const a2hs = document.getElementById("a2hs");
+  const btnSave = document.getElementById("btnSave");
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', function (e) {
+    console.log('beforeinstallprompt Event fired');
+    e.preventDefault();
+
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    a2hs.innerHTML = `I'm ready!
+    <button id=\"btnSave\" onclick=\"handleBtnSaveClick()\">Launch</button>`
+
+    return false;
+  });
+
+  function handleBtnSaveClick() {
+    const result = confirm('Do you want to add the app to home screen?');
+    if (result) {
+      promptAddToHomeScreen();
+    }
+  }
+
+  const promptAddToHomeScreen = () => {
+    if (deferredPrompt !== undefined) {
+      // The user has had a positive interaction with our app and Chrome
+      // has tried to prompt previously, so let's show the prompt.
+      deferredPrompt.prompt();
+
+      // Follow what the user has done with the prompt.
+      deferredPrompt.userChoice.then(function (choiceResult) {
+
+        console.log(choiceResult.outcome);
+
+        if (choiceResult.outcome == 'dismissed') {
+          console.log('User cancelled home screen install');
+        }
+        else {
+          console.log('User added to home screen');
+        }
+
+        // We no longer need the prompt.  Clear it up.
+        deferredPrompt = null;
+      });
+    }
+  }
+
+</script>
+
+</html>
