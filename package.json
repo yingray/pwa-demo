@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server",
     "a2hs": "NODE_ENV=A2HS npm start",
-    "noti": "NODE_ENV=NOTI npm start"
+    "noti": "NODE_ENV=NOTI npm start",
+    "instagram": "NODE_ENV=instagram npm start"
   },
   "keywords": [],
   "author": "",

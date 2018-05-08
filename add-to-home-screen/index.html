@@ -17,19 +17,15 @@
 
 </body>
 <script>
-  if ("serviceWorker" in navigator && "PushManager" in window) {
-    console.log("Service Worker and Push is supported");
+  if ("serviceWorker" in navigator) {
     navigator.serviceWorker
       .register("/sw.js")
       .then(registration => {
         console.log("SW registered: ", registration);
       })
       .catch(registrationError => {
-        console.log("SW registration failed: ", registrationError);
+        alert("SW registration failed: ", registrationError);
       });
-  } else {
-    console.warn("Push messaging is not supported");
-    pushButton.textContent = "Push Not Supported";
   }
   const a2hs = document.getElementById("a2hs");
   const btnSave = document.getElementById("btnSave");

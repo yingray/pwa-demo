@@ -7,6 +7,8 @@ const getFile = () => {
   switch (process.env.NODE_ENV) {
     case "A2HS":
       return "./add-to-home-screen";
+    case "instagram":
+      return "./instagram-ux";
     default:
       return "./push-notification";
   }
