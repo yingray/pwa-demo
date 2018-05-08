@@ -1,0 +1,11 @@
+{
+  "short_name": "SYD",
+  "name": "Sample PWA Yingray Demo",
+  "icons": [
+    { "src": "images/logo.png", "sizes": "192x192", "type": "image/png" }
+  ],
+  "start_url": ".",
+  "background_color": "#2196F3",
+  "theme_color": "#098",
+  "display": "standalone"
+}
